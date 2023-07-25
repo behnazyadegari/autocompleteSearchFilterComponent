@@ -1,0 +1,26 @@
+<form [formGroup]="formGroup">
+    <mat-form-field [appearance]="appearance">
+
+        <mat-label>{{lable}}</mat-label>
+
+        <input type="text" matInput [placeholder]="placeholder" [formControlName]="formNames" [required]="isrequired" [matAutocomplete]="autoCompleteName" [readonly]="disabled">
+
+
+
+        <mat-autocomplete autoActiveFirstOption #autoCompleteName="matAutocomplete" [displayWith]="displayFn" (optionSelected)="changeSelection()">
+            <mat-option *ngIf="isLoading" class="is-loading"><mat-progress-bar mode="indeterminate"></mat-progress-bar></mat-option>
+            <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of  filteredList" [value]="option">
+                    {{option.title}}
+                </mat-option>
+            </ng-container>
+        </mat-autocomplete>
+        <mat-icon matPrefix *ngIf="icon != ''"
+                  class="hidden sm:flex icon-size-5 ml-2"
+                  [svgIcon]="icon"></mat-icon>
+        <mat-error *ngIf="formGroup.get(formNames).errors?.incorrect ||formGroup.get(formNames).errors?.required">
+            {{lable}} مورد نظر را از لیست انتخاب کنید
+        </mat-error>
+
+    </mat-form-field>
+</form>
